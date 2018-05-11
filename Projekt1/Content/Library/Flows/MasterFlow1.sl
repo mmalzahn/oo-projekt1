@@ -9,14 +9,26 @@ flow:
             - credential:
                 value: qk+marxw7dELdTflRoYOm/pcgFU7ngNEwYvf5tLl
                 sensitive: true
-            - key_filters_string: '*'
-            - value_filters_string: '*'
+            - key_filters_string: endpoint
+            - value_filters_string: ' '
             - regions_string: eu-west-1
         publish:
           - return_result
         navigate:
+          - SUCCESS: get_unique_name
+          - FAILURE: on_failure
+    - get_unique_name:
+        do:
+          io.cloudslang.amazon.aws.ec2.utils.get_unique_name:
+            - instance_name_prefix: begin
+        publish:
+          - uniqueName: '${return_result}'
+        navigate:
           - SUCCESS: SUCCESS
           - FAILURE: on_failure
+  outputs:
+    - flow_output_1: '${return_result}'
+    - flow_output_2: '${uniqueName}'
   results:
     - SUCCESS
     - FAILURE
@@ -24,14 +36,17 @@ extensions:
   graph:
     steps:
       describe_regions:
-        x: 83
-        y: 133
+        x: 100
+        y: 150
+      get_unique_name:
+        x: 253
+        y: 144
         navigate:
-          fbfcafc4-ccaa-d45f-52d1-db32ea0a7210:
-            targetId: 18b7fdc5-4ac0-9cd8-9b33-7a196ce2a9a1
+          0282ec26-f386-4bfc-51f2-7b4a8105191b:
+            targetId: 640a42f0-6f17-cdb9-9ec8-dd67e8232a9c
             port: SUCCESS
     results:
       SUCCESS:
-        18b7fdc5-4ac0-9cd8-9b33-7a196ce2a9a1:
-          x: 400
-          y: 150
+        640a42f0-6f17-cdb9-9ec8-dd67e8232a9c:
+          x: 436
+          y: 56
