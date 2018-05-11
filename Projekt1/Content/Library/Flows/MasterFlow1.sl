@@ -2,23 +2,32 @@ namespace: Flows
 flow:
   name: MasterFlow1
   workflow:
-    - uuid_generator:
+    - describe_regions:
         do:
-          io.cloudslang.base.utils.uuid_generator: []
+          io.cloudslang.amazon.aws.ec2.regions.describe_regions:
+            - identity: AKIAJP7IML36YRSA6T6Q
+            - credential:
+                value: qk+marxw7dELdTflRoYOm/pcgFU7ngNEwYvf5tLl
+                sensitive: true
+            - key_filters_string: '*'
+            - value_filters_string: '*'
+            - regions_string: eu-west-1
         publish:
-          - new_uuid
+          - return_result
         navigate:
           - SUCCESS: SUCCESS
+          - FAILURE: on_failure
   results:
     - SUCCESS
+    - FAILURE
 extensions:
   graph:
     steps:
-      uuid_generator:
-        x: 100
-        y: 150
+      describe_regions:
+        x: 83
+        y: 133
         navigate:
-          f150a808-cba8-f625-53ce-a6731799da52:
+          fbfcafc4-ccaa-d45f-52d1-db32ea0a7210:
             targetId: 18b7fdc5-4ac0-9cd8-9b33-7a196ce2a9a1
             port: SUCCESS
     results:
