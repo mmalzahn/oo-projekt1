@@ -2,21 +2,6 @@ namespace: Flows
 flow:
   name: MasterFlow1
   workflow:
-    - describe_regions:
-        do:
-          io.cloudslang.amazon.aws.ec2.regions.describe_regions:
-            - identity: AKIAJP7IML36YRSA6T6Q
-            - credential:
-                value: qk+marxw7dELdTflRoYOm/pcgFU7ngNEwYvf5tLl
-                sensitive: true
-            - key_filters_string: endpoint
-            - value_filters_string: ' '
-            - regions_string: eu-west-1
-        publish:
-          - return_result
-        navigate:
-          - SUCCESS: get_unique_name
-          - FAILURE: on_failure
     - get_unique_name:
         do:
           io.cloudslang.amazon.aws.ec2.utils.get_unique_name:
@@ -35,9 +20,6 @@ flow:
 extensions:
   graph:
     steps:
-      describe_regions:
-        x: 100
-        y: 150
       get_unique_name:
         x: 253
         y: 144
